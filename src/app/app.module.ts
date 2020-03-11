@@ -3,15 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { FormloginComponent } from './componets/formlogin/formlogin.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import{JwtInterceptorService} from './helpers/jwt-interceptor.service';
+import { AdminSystemComponent } from './pages/admin-system/admin-system.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ListeUsersComponent } from './components/liste-users/liste-users.component';
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    FormloginComponent
+    FormloginComponent,
+    AdminSystemComponent,
+    RegisterComponent,
+    ListeUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+  { provide : HTTP_INTERCEPTORS, useClass : JwtInterceptorService ,multi : true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
